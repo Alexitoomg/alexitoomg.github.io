@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09090f">
+  <title>DARK PASS | Control de acceso</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section id="appSection" hidden>
+      <aside class="sidebar">
+        <div class="brand">DARK<span>PASS</span></div>
+        <p class="sidebar-caption">GESTIÓN DE EVENTOS</p>
+        <nav>
+          <a href="#dashboard" class="nav-link active">Resumen</a>
+          <a href="#generator" class="nav-link">Crear entrada</a>
+          <a href="#scanner" class="nav-link">Escáner QR</a>
+          <a href="#tickets" class="nav-link">Entradas</a>
+          <a href="#activity" class="nav-link">Historial</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <span id="userRole" class="role-pill">ADMINISTRADOR</span>
+        </div>
+      </aside>
+
+      <div class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">PANEL DE CONTROL</p>
+            <h1 id="eventHeading">DARK PASS</h1>
+            <p class="muted">Administración y validación de entradas</p>
+          </div>
+          <span class="live-indicator"><i></i> Conectado</span>
+        </header>
+
+        <section id="dashboard" class="stats-grid">
+          <article class="stat-card"><span>Total de entradas</span><strong id="totalTickets">0</strong></article>
+          <article class="stat-card"><span>Disponibles</span><strong id="availableTickets">0</strong></article>
+          <article class="stat-card"><span>Utilizadas</span><strong id="usedTickets">0</strong></article>
+          <article class="stat-card"><span>Anuladas</span><strong id="cancelledTickets">0</strong></article>
+        </section>
+
+        <section id="generator" class="panel section-panel admin-only">
+          <div class="section-heading">
+            <div><p class="eyebrow">NUEVO REGISTRO</p><h2>Generar entrada</h2></div>
+          </div>
+          <form id="ticketForm" class="form-grid">
+            <div><label for="guestName">Nombre del invitado</label><input id="guestName" maxlength="80" required placeholder="Ej. Ana López"></div>
+            <div><label for="eventName">Nombre del evento</label><input id="eventName" maxlength="80" required placeholder="Ej. DARK PARTY"></div>
+            <button class="primary" type="submit">Generar entrada QR</button>
+          </form>
+          <p id="createMessage" class="message" role="status"></p>
+          <div id="newTicketPreview"></div>
+        </section>
+
+        <section id="scanner" class="panel section-panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">CONTROL DE INGRESO</p><h2>Escáner QR</h2><p class="muted">Escaneá el QR de cada invitado. La validación se realiza en el servidor.</p></div>
+          </div>
+          <div class="scanner-layout">
+            <div id="reader"></div>
+            <div class="scanner-controls">
+              <button id="startScanner" class="primary" type="button">Activar cámara</button>
+              <button id="stopScanner" class="secondary" type="button">Detener cámara</button>
+              <div id="scanResult" class="scan-result" role="status" aria-live="polite">Esperando un código QR.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="tickets" class="panel section-panel">
+          <div class="section-heading row-heading">
+            <div><p class="eyebrow">REGISTRO</p><h2>Entradas</h2></div>
+            <input id="ticketSearch" class="search" type="search" placeholder="Buscar invitado o código">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Invitado</th><th>Evento</th><th>Código</th><th>Estado</th><th>Fecha</th><th>Acción</th></tr></thead>
+              <tbody id="ticketTable"><tr><td colspan="6" class="muted">Cargando entradas...</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="activity" class="panel section-panel">
+          <div class="section-heading"><div><p class="eyebrow">AUDITORÍA</p><h2>Historial de escaneos</h2></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Fecha</th><th>Resultado</th><th>Invitado / código</th><th>Personal</th></tr></thead>
+              <tbody id="activityTable"><tr><td colspan="4" class="muted">Cargando historial...</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <footer> D ARK PASS · Control de acceso </footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
